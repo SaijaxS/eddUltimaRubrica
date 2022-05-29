@@ -2,7 +2,7 @@ package fp;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.NotImplementedException;
 public class Calculator {
 
@@ -39,40 +39,65 @@ public class Calculator {
 		while (number - step > 0) {
 			stepList.add(number -= step);
 		}
-
+		return ListToArray(stepList);
 		}
-
+	public static int[] ListToArray(List<Integer> lista) {
+		int[] iArr = new int[lista.size()];
+		for (int i = 0; i < lista.size(); i++) {
+			iArr[i] = lista.get(i);
+		}
+		return iArr;
+	}
 	/*
 	 * Módulo al que se le pasa un número entero del 0 al 20 y devuelve los
 	 * divisores que tiene.
 	 */
 	public static int[] divisors(int n) {
-		
-		int divisors =0;
-		int contador=0;
-		for(int i = 1 ; i <n/2 ; i++){
-            if(n%2==0){
-                contador++;
-                divisors+=contador;
-				int [] ListaDiv= {divisors};
-            }
-            else {
-                contador++;
-                divisors+=contador;
-                
-            }
+		if (n == 0)
+			return null;
+		List<Integer> listaDiv = new ArrayList<Integer>();
+		if (n >= 0 && n <= 20) {
+			int counter = 0;
+			for (int i = 20; i > 0; i--) {
+				if (n % i == 0) {
+					listaDiv.add(i);
+				}
+			}
 
-        
-        }
+			return ListToArray(listaDiv);
+		}
+		return new int[] { -1 };
 		
-		throw new NotImplementedException("no implementado");
 	}
+	
 
 	/*
 	 * Toma como parámetros una cadena de caracteres y devuelve cierto si la cadena resulta ser un palíndromo
 	 */
 	public static boolean checkIsPalindrome(String cadena) {
-		throw new NotImplementedException("no implementado");
+		if (cadena == null) {
+			return false;
+		}
+		String cadena2 = StringUtils.stripAccents(cadena).toLowerCase();
+		cadena2 = cadena2.replaceAll(" ", "");
+		cadena2 = cadena2.replaceAll("\\.", "");
+		cadena2 = cadena2.replaceAll(",", "");
+		cadena2 = cadena2.replaceAll("\\?", "");
+		cadena2 = cadena2.replaceAll("\\¿", "");
+		cadena2 = cadena2.replaceAll(":", "");
+		cadena2 = cadena2.replaceAll("·", "");
+
+		int i = 0, j = cadena2.length() - 1;
+		while (i < j) {
+			if (cadena2.charAt(i) != cadena2.charAt(j)) {
+				return false;
+			}
+
+			i++;
+			j--;
+		}
+
+		return true;
 	}
 
 	/*
