@@ -1,5 +1,7 @@
 package fp;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -105,7 +107,27 @@ public class Calculator {
 	 * mostrar: cincuenta y seis
 	 */
 	public static String speakToMe(int n) {
-		throw new NotImplementedException("no implementado");
+		String[] unidades = {"uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+		String[] decenas = {"Diez", "Veinte", "Treinta", "Cuarenta", "Cincuenta", "Sesenta", "Setenta", "Ochenta", "Noventa"};
+		String cero = "Cero";
+		String num="";
+		num = stringsResults(n, unidades, decenas, cero, num);
+		return num;
+	}
+	
+	private static String stringsResults(int n, String[] uns, String[] decs, String cero, String num) {
+		if(n == 0) {
+			num += cero;
+		}else if(n < 10) {
+			num += uns[n - 1];
+		}else if(n%10 == 0) {
+			num += decs[(n/10) -1];
+		}else {
+			int unit = n%10;
+			int ten = n/10;
+			num = decs[ten - 1] + " y " + uns[unit - 1];
+		}
+		return num;
 	}
 
 	/*
@@ -113,7 +135,10 @@ public class Calculator {
 	 * dd-MM-yyyy
 	 */
 	public static boolean isLeapYear(String fecha) {
-		throw new NotImplementedException("no implementado");
+		if (fecha == "")	
+			return false;
+		DateTimeFormatter bisiesto = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return LocalDate.parse(fecha, bisiesto).isLeapYear();
 	}
 
 	/*
